@@ -10,6 +10,9 @@ body{
 }
 
 .container{
+    display: flex;
+    flex-direction: column;
+
     width: 300px;
     height: 500px;
    
@@ -21,8 +24,8 @@ body{
 }
 
 .display{
-    min-height: 10%;
-    margin: 1em 1em 2em 1em;
+    flex: 1;
+    margin: 1em 1em 1em 1em;
 
     border: 1px solid rgb(233, 233, 233);
     border-radius: .5em;
@@ -30,7 +33,7 @@ body{
 }
 
 .button-holder{
-    min-height: 75%;
+    flex: 5;
     margin: 1em 1em 1em 1em;
 
     border: 1px solid rgb(233, 233, 233);
