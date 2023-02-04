@@ -13,7 +13,7 @@ function divideNumbers(n1, n2) {return n1 / n2;}
 
 // Function operate
 function operate(op, n1, n2){
-          if (op == "+") { return addNumbers(n1, n2);
+    if       (op == "+") { return addNumbers(n1, n2);
     }else if (op == "-") { return substNumbers(n1, n2);
     }else if (op == "*") { return multiNumbers(n1, n2);
     }else if (op == "/") { return divideNumbers(n1, n2);
