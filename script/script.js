@@ -1,6 +1,7 @@
 const container = document.getElementById("container");
 const display = document.getElementById("display");
 const buttonHolder = document.getElementById("button-holder");
+const buttons = document.querySelectorAll(".calc-button");
 
 // Function add
 function addNumbers(n1, n2) {return n1 + n2;}
@@ -10,7 +11,6 @@ function substNumbers(n1, n2) {return n1 - n2;}
 function multiNumbers(n1, n2) {return n1 * n2;}
 // Function divide
 function divideNumbers(n1, n2) {return n1 / n2;}
-
 // Function operate
 function operate(op, n1, n2){
     if       (op == "+") { return addNumbers(n1, n2);
@@ -19,3 +19,14 @@ function operate(op, n1, n2){
     }else if (op == "/") { return divideNumbers(n1, n2);
     }else return "Invalid operator";
 }
+
+// Function to add event listeners on each button and send its inner text to the display 
+function init(){
+    buttons.forEach((currentBtn) => {
+        currentBtn.addEventListener("click", (e) => {
+            display.innerHTML += currentBtn.innerText;
+        })
+    })
+}
+
+init();

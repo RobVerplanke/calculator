@@ -2,24 +2,16 @@ body{
     margin: 0;
     padding: 0;
 
-    font-family: 'Courier New', Courier, monospace;
-
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 h2{
 
 }
 
-h3 {
-    font-weight: 100;
-    font-size: 1.8em;
-
-}
-
 button{
     height: 4em;
     width: 4em;
-
     font-size: 1em;
     background-color: rgb(255, 255, 255);
     border: 1px solid red;
@@ -64,21 +56,23 @@ button{
 
 #display {
     display: flex;
-    align-items: bottom;
+    align-items:flex-end;
     justify-content: end;
     flex: 1;
 
-    height: 4em;
+    min-height: 2em;
 
-    margin: 1em 1em 1em 1em;
+    margin: .8em .7em .5em .7em;
     padding-left: 1em;
+    
+    font-size: 2.2em;
 
     border: 1px solid rgb(233, 233, 233);
     border-radius: .5em;
 
 }
 
-#button-row {
+.button-row {
     display: flex;
     flex-direction:row;
     flex-wrap: wrap;
