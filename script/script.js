@@ -15,7 +15,7 @@ function init(){
     })
 }
 
-// Function that stores and handles incoming numbers and operators
+// Function that stores and handles incoming numbers and operators (as characters)
 function processValue(currentBtn){
     displayValue += currentBtn;
     display.innerHTML += currentBtn;
@@ -46,7 +46,7 @@ function processValue(currentBtn){
     
     }else if (currentBtn == '='){
 
-        // Remove the first number, the operator symbol and the equal sign from the string
+        // Remove the first number, the operator symbol and the equal sign from the string,
         // so only the second number remains
         secondNumber = displayValue.replace(firstNumber, '').replace('=', '').slice(1);
 
@@ -55,12 +55,12 @@ function processValue(currentBtn){
             secondNumber = NaN;
         }
 
-        // Calculate the input. If the result is a int: display the result, 
-        // else give error message
+        // Calculate the input.
         let tempValue = operate(operator, +firstNumber, +secondNumber); 
 
+        // If users input is invalid: give error message, else display result
         if (isNaN(tempValue)){
-            display.innerHTML = "NEEHEE!";
+            display.innerHTML = "Can't_compute";
             firstNumber = "";
             secondNumber = "";
             displayValue = "";
