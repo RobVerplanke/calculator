@@ -28,29 +28,45 @@ function processValue(currentBtn){
         operator = currentBtn;
         // Remove the operator at the end of the string
         firstNumber = displayValue.slice(0,-1);   
+   
     }else if (currentBtn == '×'){
         clearDisplay();
         operator = currentBtn;
         firstNumber = displayValue.slice(0,-1);
+   
     }else if (currentBtn == '−'){
         clearDisplay();
         operator = currentBtn;
         firstNumber = displayValue.slice(0,-1);
+   
     }else if (currentBtn == '+'){
         clearDisplay();
         operator = currentBtn;
         firstNumber = displayValue.slice(0,-1);
+    
     }else if (currentBtn == '='){
         // Remove the first number and operator so only the second number remains
         secondNumber = displayValue.replace(firstNumber, '').replace('=', '').slice(1);
         display.innerHTML = operate(operator, +firstNumber, +secondNumber);
+    
     }else if (currentBtn == 'C'){
-        firstNumber, secondNumber, displayValue = "undefined";
+        firstNumber = "undefined";
+        secondNumber = "undefined";
+        displayValue = "undefined";
         clearDisplay();
+    
     }else if (currentBtn == '←'){
-        // Remove operator at the end and the last number
-        display.innerHTML = displayValue.slice(0,-2);
+
+        // Remove the backspace symbol and the last number 
         displayValue = displayValue.slice(0,-2);
+
+        // Remove the first number and the operator symbol
+        display.innerHTML = displayValue
+            .replace(firstNumber, '')
+            .replace('÷', '')
+            .replace('×', '')
+            .replace('−', '')
+            .replace('+', '');   
     }
 
     console.log("current button: " + currentBtn + "\nDisplayValue: " + displayValue + "\nfirstNumber: "
@@ -73,10 +89,12 @@ function operate(op, n1, n2){
 
 // Function add
 function addNumbers(n1, n2) {return n1 + n2;}
+
 // Function subtract
 function substNumbers(n1, n2) {return n1 - n2;}
+
 // Function multiply
 function multiNumbers(n1, n2) {return n1 * n2;}
+
 // Function divide
 function divideNumbers(n1, n2) {return n1 / n2;}
-
