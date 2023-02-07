@@ -45,14 +45,38 @@ function processValue(currentBtn){
         firstNumber = displayValue.slice(0,-1);
     
     }else if (currentBtn == '='){
-        // Remove the first number and operator so only the second number remains
+
+        // Remove the first number, the operator symbol and the equal sign from the string
+        // so only the second number remains
         secondNumber = displayValue.replace(firstNumber, '').replace('=', '').slice(1);
-        display.innerHTML = operate(operator, +firstNumber, +secondNumber);
-    
+
+        // Division by zero check
+        if(operator == '÷' && secondNumber == '0'){
+            secondNumber = NaN;
+        }
+
+        // Calculate the input. If the result is a int: display the result, 
+        // else give error message
+        let tempValue = operate(operator, +firstNumber, +secondNumber); 
+
+        if (isNaN(tempValue)){
+            display.innerHTML = "NEEHEE!";
+            firstNumber = "";
+            secondNumber = "";
+            displayValue = "";
+        } else{
+            display.innerHTML = tempValue;
+        }
+
+        // If result is displayed, clear the values so user can't use backspace
+        firstNumber = "";
+        secondNumber = "";
+        displayValue = "";
+
     }else if (currentBtn == 'C'){
-        firstNumber = "undefined";
-        secondNumber = "undefined";
-        displayValue = "undefined";
+        firstNumber = "";
+        secondNumber = "";
+        displayValue = "";
         clearDisplay();
     
     }else if (currentBtn == '←'){
@@ -69,6 +93,7 @@ function processValue(currentBtn){
             .replace('+', '');   
     }
 
+    // For testing
     console.log("current button: " + currentBtn + "\nDisplayValue: " + displayValue + "\nfirstNumber: "
         + firstNumber+ "\nsecondNumber: " + secondNumber + "\noperator: " + operator);
 }
@@ -78,7 +103,7 @@ function clearDisplay(){
     display.innerHTML = "";
 }
 
-// Function operate
+// Function operate, returns the right calculation
 function operate(op, n1, n2){
     if       (op == "+") { return addNumbers(n1, n2);
     }else if (op == "−") { return substNumbers(n1, n2);
