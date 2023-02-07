@@ -2,7 +2,7 @@ const container = document.getElementById("container");
 const display = document.getElementById("display");
 const buttonHolder = document.getElementById("button-holder");
 const buttons = document.querySelectorAll(".calc-button");
-let displayValue, firstNumber, secondNumber;
+let displayValue, firstNumber, secondNumber, storedNumber, operator;
 
 init();
 
@@ -13,6 +13,41 @@ function init(){
             processValue(currentBtn.value);
         });
     })
+}
+
+// Function that stores and handles incoming numbers and operators
+function processValue(currentBtn){
+    displayValue += currentBtn;
+    display.innerHTML += currentBtn;
+
+    // Remove the initial 'undefined' value
+    displayValue = displayValue.replace('undefined', '');
+
+    if (currentBtn == '÷') {
+        clearDisplay();
+        operator = currentBtn;
+        // Remove the operator at the end of the string
+        firstNumber = displayValue.slice(0,-1);   
+    }else if (currentBtn == '×'){
+        clearDisplay();
+        operator = currentBtn;
+        firstNumber = displayValue.slice(0,-1);
+    }else if (currentBtn == '−'){
+        clearDisplay();
+        operator = currentBtn;
+        firstNumber = displayValue.slice(0,-1);
+    }else if (currentBtn == '+'){
+        clearDisplay();
+        operator = currentBtn;
+        firstNumber = displayValue.slice(0,-1);
+    }else if (currentBtn == '='){
+        // Remove the first number and operator so only the second number remains
+        secondNumber = displayValue.replace(firstNumber, '').replace('=', '').slice(1);
+        display.innerHTML = operate(operator, +firstNumber, +secondNumber);
+    }
+
+    console.log("current button: " + currentBtn + "\nDisplayValue: " + displayValue + "\nfirstNumber: "
+        + firstNumber+ "\nsecondNumber: " + secondNumber + "\noperator: " + operator);
 }
 
 // Clear the display for new input
@@ -38,37 +73,3 @@ function multiNumbers(n1, n2) {return n1 * n2;}
 // Function divide
 function divideNumbers(n1, n2) {return n1 / n2;}
 
-// Function that stores and handle incoming numbers and operators
-function processValue(currentBtn){
-    let firstNumber, storedNumber;
-    displayValue += currentBtn;
-    display.innerHTML += currentBtn;
-
-    // Remove the initial 'undefined' value
-    displayValue = displayValue.replace('undefined', '');
-
-    if (currentBtn == '÷') {
-        clearDisplay();
-        firstNumber = displayValue.slice(0,-1);
-        
-        
-                    // In progress...
-     // if (typeof firstNumber !== "undefined"){
-     //     storedNumber = firstNumber;}
-   
-   
-    }else if (currentBtn == '×'){
-        clearDisplay();
-        firstNumber = displayValue.slice(0,-1);
-    }else if (currentBtn == '−'){
-        clearDisplay();
-        firstNumber = displayValue.slice(0,-1);
-    }else if (currentBtn == '+'){
-        clearDisplay();
-        firstNumber = displayValue.slice(0,-1);
-    }else if (currentBtn == '='){
-        display.innerHTML = "result";
-    }
-
-    console.log("current button: " + currentBtn + "\nDisplayValue: " + displayValue + "\nfirstNumber: " + firstNumber+ "\nstoredNumber: " + storedNumber);
-}
