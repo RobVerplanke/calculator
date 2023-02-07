@@ -44,6 +44,13 @@ function processValue(currentBtn){
         // Remove the first number and operator so only the second number remains
         secondNumber = displayValue.replace(firstNumber, '').replace('=', '').slice(1);
         display.innerHTML = operate(operator, +firstNumber, +secondNumber);
+    }else if (currentBtn == 'C'){
+        firstNumber, secondNumber, displayValue = "undefined";
+        clearDisplay();
+    }else if (currentBtn == '←'){
+        // Remove operator at the end and the last number
+        display.innerHTML = displayValue.slice(0,-2);
+        displayValue = displayValue.slice(0,-2);
     }
 
     console.log("current button: " + currentBtn + "\nDisplayValue: " + displayValue + "\nfirstNumber: "
