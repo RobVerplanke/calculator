@@ -23,6 +23,12 @@ function processValue(currentBtn){
     // Remove the initial 'undefined' value
     displayValue = displayValue.replace('undefined', '');
 
+    // Set max. length of characters to be displayed
+    if (displayValue.length >= 12){
+        displayValue = displayValue.slice(0, 12);
+        display.innerHTML = displayValue;
+    }
+
     if (currentBtn == '÷') {
         clearDisplay();
         operator = currentBtn;
@@ -82,18 +88,18 @@ function processValue(currentBtn){
             display.innerHTML = "Can't_compute";
             setTimeout(clearDisplay, 1000);
         
-            // The result is treated like a new input
+            // The result of a calculation is treated like a new input
             // If result is not a float, show full result
         }else if (result % 1 === 0) {
             firstNumber, displayValue = result;
             display.innerHTML = result;
 
-            // If result is a float, show 2 decimals
+            // If result is a float, show result with a max. length and fill in with decimals
         }else {
-            firstNumber, displayValue = result;
-            display.innerHTML = result.toFixed(2);
+            const rounded = Math.floor(result * 10000000000) / 10000000000;
+            firstNumber, displayValue = rounded;
+            display.innerHTML = rounded;
         }
-
     }
 
     // For testing
