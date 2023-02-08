@@ -78,21 +78,21 @@ function processValue(currentBtn){
 
         // If users input is invalid: give error message, else display result
         if (isNaN(result)){
-            //clearValues();
+            clearValues();
             display.innerHTML = "Can't_compute";
             setTimeout(clearDisplay, 1000);
         
-            // Is result is not a float, show full result
+            // The result is treated like a new input
+            // If result is not a float, show full result
         }else if (result % 1 === 0) {
+            firstNumber, displayValue = result;
             display.innerHTML = result;
 
-            // Is result is a float, show 2 decimals
-        }else{
+            // If result is a float, show 2 decimals
+        }else {
+            firstNumber, displayValue = result;
             display.innerHTML = result.toFixed(2);
         }
-
-        // If result is returned, clear the values so user can't use backspace in the result
-        clearValues();
 
     }
 
