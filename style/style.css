@@ -21,10 +21,16 @@ button{
 
 }
 
-.function{
+.clear, .backspace, .decimal, .equals{
     background: red;
     color: white;
 }
+
+.operator{
+    background: rgb(180, 50, 50);
+    color: white;
+}
+
 
 #wrapper {
     display: flex;
@@ -52,7 +58,7 @@ button{
 
 #display {
     font-family:monospace;
-
+    overflow: hidden;
     display: flex;
     justify-content: end;
 

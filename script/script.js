@@ -1,27 +1,85 @@
-const container = document.getElementById("container");
 const display = document.getElementById("display");
-const buttonHolder = document.getElementById("button-holder");
-const buttons = document.querySelectorAll(".calc-button");
+const buttons = document.querySelectorAll(".button");
 
-init();
+displayValue = ''; 
+firstNumber = '';
+secondNumber = '';
+firstOperator = '';
+secondOperator = '';
+result = null;
 
-// Function to add event listeners on each button and send its inner text to the display 
+// Add event listeners on each button and call the matching function
 function init(){
     buttons.forEach(currentBtn => {
         currentBtn.addEventListener("click", () => {
-            processValue(currentBtn.value);
+            if (currentBtn.classList.contains("number")){
+                inputNumber(currentBtn.value);
+                updateDisplay();
+            } else if (currentBtn.classList.contains("operator")){
+                inputOperator(currentBtn.value);
+                updateDisplay();
+            } else if (currentBtn.classList.contains("clear")){
+                inputClear();
+                updateDisplay();
+            } else if (currentBtn.classList.contains("backspace")){
+                displayValue = displayValue.slice(0,-1);
+                updateDisplay();
+            } else if (currentBtn.classList.contains("decimal")){
+                inputDecimal(currentBtn.value);
+                updateDisplay();
+            } else if (currentBtn.classList.contains("equals")){
+                inputEquals();
+                updateDisplay();
+            }
         });
-    })
+    });
 }
 
-display.innerText = "012345";
+init();
 
-// Function that stores and handles incoming numbers and operators (as characters)
-function processValue(currentBtn){
+// Make sure the value fits on the display, if so update the display value
+function updateDisplay(){
+    if (displayValue.length >= 12){
+        displayValue = displayValue.substring(0, 11);
+    }
+    display.innerText = displayValue;
+}
+
+function inputNumber(number){
+    displayValue += number;
+
+    // Store input
+    if (firstOperator === ''){
+        firstNumber += number;
+    }else {
+        secondNumber += number;
+    }
+}
+
+function inputOperator(operator){
+    displayValue += operator;
     
+    firstOperator = operator;
 }
 
-// Function operate, returns the right calculation
+function inputDecimal(decimal){
+    displayValue += decimal;        
+}
+
+function inputEquals(){
+    displayValue = operate(firstOperator, +firstNumber, +secondNumber).toString();
+}
+
+function inputClear(){
+    displayValue = ''; 
+    firstNumber = '';
+    secondNumber = '';
+    firstOperator = '';
+    secondOperator = '';
+    result = '';
+}
+
+// Returns result of the calculation
 function operate(op, n1, n2){
     if       (op == "+") { return addNumbers(n1, n2);
     }else if (op == "−") { return substNumbers(n1, n2);
