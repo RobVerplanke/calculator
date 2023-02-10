@@ -46,27 +46,34 @@ function updateDisplay(){
 }
 
 function inputNumber(number){
+    
     displayValue += number;
 
-    // Store input
+    // Store input numbers
     if (firstOperator === ''){
         firstNumber += number;
     }else {
         secondNumber += number;
+        displayValue = secondNumber;
     }
 }
 
+// Store operator
 function inputOperator(operator){
-    displayValue += operator;
-    
     firstOperator = operator;
 }
 
 function inputDecimal(decimal){
-    displayValue += decimal;        
+    if (displayValue === ''){
+        displayValue = '0.';
+    } else{
+        displayValue += decimal; 
+    }
 }
 
+// Calculate input
 function inputEquals(){
+    result = operate(firstOperator, +firstNumber, +secondNumber);
     displayValue = operate(firstOperator, +firstNumber, +secondNumber).toString();
 }
 

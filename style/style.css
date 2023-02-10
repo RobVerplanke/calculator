@@ -22,12 +22,14 @@ button{
 }
 
 .clear, .backspace, .decimal, .equals{
+    border: 0;
     background: red;
     color: white;
 }
 
 .operator{
-    background: rgb(180, 50, 50);
+    border: 0;
+    background: rgb(53, 53, 53);
     color: white;
 }
 
