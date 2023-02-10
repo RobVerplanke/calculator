@@ -6,7 +6,7 @@ firstNumber = '';
 secondNumber = '';
 firstOperator = '';
 secondOperator = '';
-result = null;
+result = '';
 
 // Add event listeners on each button and call the matching function
 function init(){
@@ -50,17 +50,33 @@ function inputNumber(number){
     displayValue += number;
 
     // Store input numbers
-    if (firstOperator === ''){
+    if (firstOperator === '' && secondNumber === ''){
         firstNumber += number;
-    }else {
+    } else{
         secondNumber += number;
         displayValue = secondNumber;
     }
+
+    consoleLog();
 }
 
-// Store operator
+
+// Store operators
 function inputOperator(operator){
-    firstOperator = operator;
+    
+    if (firstOperator === '' && secondOperator === ''){
+        firstOperator = operator;
+    } else{
+        secondOperator = operator;
+    }
+
+    if (secondOperator !== ''){
+        result = operate(firstOperator, +firstNumber, +secondNumber);
+        displayValue = operate(firstOperator, +firstNumber, +secondNumber).toString(); 
+        firstNumber = result;
+        secondNumber = '';
+    }
+    consoleLog();
 }
 
 function inputDecimal(decimal){
@@ -75,6 +91,7 @@ function inputDecimal(decimal){
 function inputEquals(){
     result = operate(firstOperator, +firstNumber, +secondNumber);
     displayValue = operate(firstOperator, +firstNumber, +secondNumber).toString();
+    consoleLog();
 }
 
 function inputClear(){
@@ -84,15 +101,16 @@ function inputClear(){
     firstOperator = '';
     secondOperator = '';
     result = '';
+    consoleLog();
 }
 
 // Returns result of the calculation
 function operate(op, n1, n2){
     if       (op == "+") { return addNumbers(n1, n2);
-    }else if (op == "−") { return substNumbers(n1, n2);
-    }else if (op == "×") { return multiNumbers(n1, n2);
-    }else if (op == "÷") { return divideNumbers(n1, n2);
-    }else return "Invalid operator";
+    } else if (op == "−") { return substNumbers(n1, n2);
+    } else if (op == "×") { return multiNumbers(n1, n2);
+    } else if (op == "÷") { return divideNumbers(n1, n2);
+    } else return "Invalid operator";
 }
 
 // Calculation functions
@@ -100,3 +118,9 @@ function addNumbers(n1, n2) {return n1 + n2;}
 function substNumbers(n1, n2) {return n1 - n2;}
 function multiNumbers(n1, n2) {return n1 * n2;}
 function divideNumbers(n1, n2) {return n1 / n2;}
+
+function consoleLog() {
+    console.log("displayValue: " + displayValue + "\nfirstNumber: " + firstNumber + "\nfirstOperator: " + firstOperator
+        + "\nsecondNumber: " + secondNumber + "\nresult: " + result
+        + "\nsecondOperator: " + secondOperator);
+}

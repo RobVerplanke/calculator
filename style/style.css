@@ -33,7 +33,11 @@ button{
     color: white;
 }
 
-
+.pressed{
+    border: 0;
+    background: rgb(80, 80, 80);
+    color: white;
+}
 #wrapper {
     display: flex;
     justify-content: center;
