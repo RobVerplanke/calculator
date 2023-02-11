@@ -28,7 +28,11 @@ function init(){
                 inputDecimal(currentBtn.value);
                 updateDisplay();
             } else if (currentBtn.classList.contains("equals")){
-                inputEquals();
+                if (secondOperator === ''){
+                    inputEquals(firstOperator, firstNumber, secondNumber);
+                } else{
+                    inputEquals(secondOperator, firstNumber, secondNumber);
+                }
                 updateDisplay();
             }
         });
@@ -45,46 +49,46 @@ function updateDisplay(){
     display.innerText = displayValue;
 }
 
-// Store number
+// Evaluate input numbers
 function inputNumber(number){
     
-    // Check for first input
+    // Checks if number is first number input
     if (firstNumber === ''){
         firstNumber += number;
         displayValue = firstNumber;
+    
     } else{
         secondNumber = '';
         secondNumber += number;
         displayValue = secondNumber;
     }
-
     consoleLog();
 }
 
-// Process operators
+// Evaluate input operators
 function inputOperator(operator){
    
-    // Check for first or second input
+    // Checks if operator is first operator input
     if (firstOperator === ''){
         firstOperator = operator;
+    
     } else if (secondOperator === ''){
         secondOperator = operator;
-        inputEquals();
+        inputEquals(firstOperator, firstNumber, secondNumber);
         firstNumber = result;
-    } else{        
-        result = operate(secondOperator, +firstNumber, +secondNumber);
-        displayValue = operate(secondOperator, +firstNumber, +secondNumber).toString();
+    
+    } else{
+        inputEquals(secondOperator, firstNumber, secondNumber);
         secondOperator = operator;
         firstNumber = result;
     }
-
     consoleLog();
 }
 
 // Calculate input
-function inputEquals(){
-    result = operate(firstOperator, +firstNumber, +secondNumber);
-    displayValue = operate(firstOperator, +firstNumber, +secondNumber).toString();
+function inputEquals(op, n1, n2){
+    result = operate(op, +n1, +n2);
+    displayValue = operate(op, +n1, +n2).toString();
     consoleLog();
 }
 
@@ -115,14 +119,13 @@ function operate(op, n1, n2){
     } else return "Invalid operator";
 }
 
-// Calculation functions
+// Calculations
 function addNumbers(n1, n2) {return n1 + n2;}
 function substNumbers(n1, n2) {return n1 - n2;}
 function multiNumbers(n1, n2) {return n1 * n2;}
 function divideNumbers(n1, n2) {return n1 / n2;}
 
 function consoleLog() {
-    console.log("displayValue: " + displayValue + "\nfirstNumber: " + firstNumber + "\nfirstOperator: " + firstOperator
-        + "\nsecondNumber: " + secondNumber + "\nresult: " + result
-        + "\nsecondOperator: " + secondOperator);
+    console.log("displayValue: " + displayValue + "\n\nfirstNumber: " + firstNumber + "\nfirstOperator: " + firstOperator
+        + "\nsecondNumber: " + secondNumber + "\nsecondOperator: " + secondOperator + "\nresult: " + result);
 }
