@@ -53,12 +53,15 @@ function updateDisplay(){
 function inputNumber(number){
     
     // Checks if number is first number input
-    if (firstNumber === ''){
+    if (firstOperator === ''){
         firstNumber += number;
         displayValue = firstNumber;
     
+    } else if (secondOperator === ''){
+        secondNumber += number;
+        displayValue = secondNumber;
+    
     } else{
-        secondNumber = '';
         secondNumber += number;
         displayValue = secondNumber;
     }
@@ -76,10 +79,12 @@ function inputOperator(operator){
         secondOperator = operator;
         inputEquals(firstOperator, firstNumber, secondNumber);
         firstNumber = result;
+        secondNumber = '';
     
     } else{
         inputEquals(secondOperator, firstNumber, secondNumber);
         secondOperator = operator;
+        secondNumber = '';
         firstNumber = result;
     }
     consoleLog();
