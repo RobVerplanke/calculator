@@ -6,7 +6,7 @@ firstNumber = '';
 secondNumber = '';
 firstOperator = '';
 secondOperator = '';
-result = '';
+result = 0;
 
 // Add event listeners on each button and call the matching function
 function init(){
@@ -45,14 +45,15 @@ function updateDisplay(){
     display.innerText = displayValue;
 }
 
+// Store number
 function inputNumber(number){
     
-    displayValue += number;
-
-    // Store input numbers
-    if (firstOperator === '' && secondNumber === ''){
+    // Check for first input
+    if (firstNumber === ''){
         firstNumber += number;
+        displayValue = firstNumber;
     } else{
+        secondNumber = '';
         secondNumber += number;
         displayValue = secondNumber;
     }
@@ -60,22 +61,30 @@ function inputNumber(number){
     consoleLog();
 }
 
-
-// Store operators
+// Process operators
 function inputOperator(operator){
-    
-    if (firstOperator === '' && secondOperator === ''){
+   
+    // Check for first or second input
+    if (firstOperator === ''){
         firstOperator = operator;
-    } else{
+    } else if (secondOperator === ''){
         secondOperator = operator;
+        inputEquals();
+        firstNumber = result;
+    } else{        
+        result = operate(secondOperator, +firstNumber, +secondNumber);
+        displayValue = operate(secondOperator, +firstNumber, +secondNumber).toString();
+        secondOperator = operator;
+        firstNumber = result;
     }
 
-    if (secondOperator !== ''){
-        result = operate(firstOperator, +firstNumber, +secondNumber);
-        displayValue = operate(firstOperator, +firstNumber, +secondNumber).toString(); 
-        firstNumber = result;
-        secondNumber = '';
-    }
+    consoleLog();
+}
+
+// Calculate input
+function inputEquals(){
+    result = operate(firstOperator, +firstNumber, +secondNumber);
+    displayValue = operate(firstOperator, +firstNumber, +secondNumber).toString();
     consoleLog();
 }
 
@@ -85,13 +94,6 @@ function inputDecimal(decimal){
     } else{
         displayValue += decimal; 
     }
-}
-
-// Calculate input
-function inputEquals(){
-    result = operate(firstOperator, +firstNumber, +secondNumber);
-    displayValue = operate(firstOperator, +firstNumber, +secondNumber).toString();
-    consoleLog();
 }
 
 function inputClear(){
