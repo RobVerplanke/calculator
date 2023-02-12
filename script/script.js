@@ -94,10 +94,20 @@ function inputOperator(operator){
 }
 
 function inputDecimal(decimal){
-    if (displayValue === ''){
-        displayValue = '0.';
+     
+    // Checks if decimal belongs in first or second number
+     if (firstOperator === ''){
+
+        if (displayValue === '0'){
+            firstNumber = '0.';
+        } else{
+            firstNumber += decimal;
+        }
+        displayValue = firstNumber;
+
     } else{
-        displayValue += decimal; 
+        secondNumber += decimal;
+        displayValue = secondNumber;
     }
 }
 
