@@ -8,7 +8,7 @@ firstOperator = '';
 secondOperator = '';
 result = '';
 
-// Add event listeners on each button and call the matching function
+// Add event listeners on each button and refer to the matching function
 function init(){
     updateDisplay();
     buttons.forEach(currentBtn => {
@@ -35,9 +35,11 @@ function init(){
                 updateDisplay();
 
             } else if (currentBtn.classList.contains("equals")){ 
+
+                // Support multiple operators in one calculation
                 if (secondOperator === ''){
                     inputEquals(firstOperator, firstNumber, secondNumber);
-                } else{
+                } else{ 
                     inputEquals(secondOperator, firstNumber, secondNumber);
                 }
                 updateDisplay();
@@ -46,20 +48,14 @@ function init(){
     });
 }
 
+// Start the calculator
 init();
 
-// Make value fit the display
-function updateDisplay(){
-    if (displayValue.length >= 12){
-        displayValue = displayValue.substring(0, 11);
-    }
-    display.innerText = displayValue;
-}
 
 // Evaluate input numbers
 function inputNumber(number){
     
-    // Checks if number is first number
+    // Checks if input belongs in first number
     if (firstOperator === ''){
         firstNumber += number;
         displayValue = firstNumber;
@@ -70,21 +66,22 @@ function inputNumber(number){
     }
 }
 
+
 // Evaluate input operators
 function inputOperator(operator){
    
-    // Checks if operator is first operator
+    // Checks if input is first operator
     if (firstOperator === ''){
         firstOperator = operator;
     
-    // If second operator is given, show result of the first calculation 
+    // If input is second operator, show result of the first calculation 
     } else if (secondOperator === ''){ 
         secondOperator = operator;
         inputEquals(firstOperator, firstNumber, secondNumber);
         firstNumber = result;
         secondNumber = '';
     
-    // If 3+ operators are given, show result of the previous calculation
+    // If input is third (or higher) operator, show result of the previous calculation
     } else{ 
         inputEquals(secondOperator, firstNumber, secondNumber);
         secondOperator = operator;
@@ -93,12 +90,13 @@ function inputOperator(operator){
     }
 }
 
+
 function inputDecimal(decimal){
      
     // Checks if decimal belongs in first or second number
      if (firstOperator === ''){
 
-        if (displayValue === '0'){
+        if (displayValue === '0'){            
             firstNumber = '0.';
         } else{
             firstNumber += decimal;
@@ -111,11 +109,22 @@ function inputDecimal(decimal){
     }
 }
 
+
 // Calculate input
 function inputEquals(op, n1, n2){
     result = operate(op, +n1, +n2);
     displayValue = operate(op, +n1, +n2).toString();
 }
+
+
+// Make sure value fits the display
+function updateDisplay(){
+    if (displayValue.length >= 12){
+        displayValue = displayValue.substring(0, 11);
+    }
+    display.innerText = displayValue;
+}
+
 
 function inputClear(){
     displayValue = '0'; 
@@ -126,6 +135,7 @@ function inputClear(){
     result = '';
 }
 
+
 // Returns result of the calculation
 function operate(op, n1, n2){
     if        (op == "+") { return addNumbers(n1, n2);
@@ -134,6 +144,7 @@ function operate(op, n1, n2){
     } else if (op == "÷") { return divideNumbers(n1, n2);
     } else return "Invalid operator";
 }
+
 
 // Calculations
 function addNumbers(n1, n2) {return n1 + n2;}
