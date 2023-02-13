@@ -27,7 +27,7 @@ function init(){
                 updateDisplay();
 
             } else if (currentBtn.classList.contains("backspace")){
-                displayValue = displayValue.slice(0,-1);
+                inputBackspace();
                 updateDisplay();
 
             } else if (currentBtn.classList.contains("decimal")){
@@ -98,13 +98,18 @@ function inputDecimal(decimal){
 
         if (displayValue === '0'){            
             firstNumber = '0.';
-        } else{
-            firstNumber += decimal;
+
+        } else{ // Allow only 1 decimal in the first number
+            if (!(firstNumber.includes('.'))){
+                firstNumber += decimal;
+            }
         }
         displayValue = firstNumber;
 
-    } else{
-        secondNumber += decimal;
+    } else{ // Allow only 1 decimal in the second number
+        if (!(secondNumber.includes('.'))){
+            secondNumber += decimal;
+        }
         displayValue = secondNumber;
     }
 }
@@ -125,6 +130,17 @@ function updateDisplay(){
     display.innerText = displayValue;
 }
 
+function inputBackspace(){
+    if (secondNumber === ''){
+        firstNumber = firstNumber.slice(0,-1);
+        displayValue = firstNumber;
+        console.log("check1");
+    } else {    
+        secondNumber = secondNumber.slice(0,-1);
+        displayValue = secondNumber;
+        console.log("check2");
+    }
+}
 
 function inputClear(){
     displayValue = '0'; 
