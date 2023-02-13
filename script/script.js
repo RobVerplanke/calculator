@@ -7,6 +7,7 @@ secondNumber = '';
 firstOperator = '';
 secondOperator = '';
 result = '';
+equalBtnPressed = false;
 
 // Add event listeners on each button and refer to the matching function
 function init(){
@@ -35,12 +36,14 @@ function init(){
                 updateDisplay();
 
             } else if (currentBtn.classList.contains("equals")){ 
-
-                // Support multiple operators in one calculation
-                if (secondOperator === ''){
-                    inputEquals(firstOperator, firstNumber, secondNumber);
-                } else{ 
-                    inputEquals(secondOperator, firstNumber, secondNumber);
+                if (equalBtnPressed === false){
+                    // Support multiple operators in one calculation
+                    if (secondOperator === ''){
+                        inputEquals(firstOperator, firstNumber, secondNumber);
+                    
+                    } else{ 
+                        inputEquals(secondOperator, firstNumber, secondNumber);
+                    }
                 }
                 updateDisplay();
             }
@@ -64,6 +67,7 @@ function inputNumber(number){
         secondNumber += number;
         displayValue = secondNumber;
     }
+    equalBtnPressed = false;
 }
 
 
@@ -74,20 +78,21 @@ function inputOperator(operator){
     if (firstOperator === ''){
         firstOperator = operator;
     
-    // If input is second operator, show result of the first calculation 
+    // If input is second operator, show result of the first calculation as the first number
     } else if (secondOperator === ''){ 
         secondOperator = operator;
         inputEquals(firstOperator, firstNumber, secondNumber);
         firstNumber = result;
         secondNumber = '';
     
-    // If input is third (or higher) operator, show result of the previous calculation
+    // If input is third (or higher) operator, show result of the previous calculation as the first number
     } else{ 
         inputEquals(secondOperator, firstNumber, secondNumber);
         secondOperator = operator;
         firstNumber = result;
         secondNumber = '';
     }
+    equalBtnPressed = false;
 }
 
 
@@ -112,24 +117,25 @@ function inputDecimal(decimal){
         }
         displayValue = secondNumber;
     }
+    equalBtnPressed = false;
 }
 
 
-// Remove last input number
+// Remove last number
 function inputBackspace(){
     if (secondNumber === ''){
         firstNumber = firstNumber.slice(0,-1);
         displayValue = firstNumber;
 
-    
     } else if(!(displayValue === result)){
         secondNumber = secondNumber.slice(0,-1);
         displayValue = secondNumber;
     } 
+    equalBtnPressed = false;
 }
 
 
-// Make sure value fits the display
+// Make sure the value fits on the display
 function updateDisplay(){
     if (displayValue.length >= 12){
         displayValue = displayValue.substring(0, 11);
@@ -154,6 +160,7 @@ function inputEquals(op, n1, n2){
     result = operate(op, +n1, +n2);
     displayValue = operate(op, +n1, +n2).toString();
     firstNumber = result;
+    equalBtnPressed = true;
 }
 
 
@@ -163,7 +170,7 @@ function operate(op, n1, n2){
     } else if (op == "−") { return substNumbers(n1, n2);
     } else if (op == "×") { return multiNumbers(n1, n2);
     } else if (op == "÷") { return divideNumbers(n1, n2);
-    } else return "Invalid operator";
+    } else return "Invalid op.";
 }
 
 
