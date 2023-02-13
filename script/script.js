@@ -115,10 +115,17 @@ function inputDecimal(decimal){
 }
 
 
-// Calculate input
-function inputEquals(op, n1, n2){
-    result = operate(op, +n1, +n2);
-    displayValue = operate(op, +n1, +n2).toString();
+// Remove last input number
+function inputBackspace(){
+    if (secondNumber === ''){
+        firstNumber = firstNumber.slice(0,-1);
+        displayValue = firstNumber;
+
+    
+    } else if(!(displayValue === result)){
+        secondNumber = secondNumber.slice(0,-1);
+        displayValue = secondNumber;
+    } 
 }
 
 
@@ -130,18 +137,8 @@ function updateDisplay(){
     display.innerText = displayValue;
 }
 
-function inputBackspace(){
-    if (secondNumber === ''){
-        firstNumber = firstNumber.slice(0,-1);
-        displayValue = firstNumber;
-        console.log("check1");
-    } else {    
-        secondNumber = secondNumber.slice(0,-1);
-        displayValue = secondNumber;
-        console.log("check2");
-    }
-}
 
+// Reset the calculator
 function inputClear(){
     displayValue = '0'; 
     firstNumber = '';
@@ -149,6 +146,14 @@ function inputClear(){
     firstOperator = '';
     secondOperator = '';
     result = '';
+}
+
+
+// Calculate input
+function inputEquals(op, n1, n2){
+    result = operate(op, +n1, +n2);
+    displayValue = operate(op, +n1, +n2).toString();
+    firstNumber = result;
 }
 
 
